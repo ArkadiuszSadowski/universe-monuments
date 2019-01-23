@@ -1,0 +1,21 @@
+server:
+  port: 7071
+
+spring:
+  application:
+    name: UniverseMonuments
+  datasource:
+    url: jdbc:oracle:thin:@//localhost:49161/XE
+    username: universemonuments
+    password: universemonuments
+    driver-class-name: oracle.jdbc.driver.OracleDriver
+  jpa:
+    hibernate:
+      ddl-auto: none
+      use-new-id-generator-mappings: false
+    database-platform: org.hibernate.dialect.Oracle10gDialect
+
+token:
+  key:
+    secret: B&E)H@McQfTjWnZr4u7x!A%C*F-JaNdR
+    expiration: 60
