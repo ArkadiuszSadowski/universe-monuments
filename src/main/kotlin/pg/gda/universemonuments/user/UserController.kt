@@ -17,7 +17,7 @@ class UserController(
         private val jwtProvider: JWTProvider
 ) {
 
-    @PutMapping("/register")
+    @PostMapping("/register")
     fun register(@RequestBody userRegisterRequest: UserRegisterRequest): ResponseEntity<Any> {
         val user = userRepository.findUserByLogin(userRegisterRequest.login)
 

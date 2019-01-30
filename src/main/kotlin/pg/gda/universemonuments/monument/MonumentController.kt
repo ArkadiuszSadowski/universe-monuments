@@ -21,12 +21,12 @@ class MonumentController(private val monumentRepository: MonumentRepository) {
     fun getMonument(@PathVariable("id") id: Long): ResponseEntity<Any> {
         val monument = monumentRepository.findById(id)
         if (monument.isPresent.not()) {
-            ResponseEntity("Monument not found", HttpStatus.NOT_FOUND)
+            return ResponseEntity("Monument not found", HttpStatus.NOT_FOUND)
         }
         return ResponseEntity(monument, HttpStatus.OK)
     }
 
-    @PutMapping("/add")
+    @PostMapping()
     fun addMonument(@RequestBody monumentCreateRequest: MonumentCreateRequest): ResponseEntity<Any> {
         val monumentToSave = Monument.from(monumentCreateRequest)
         val savedMonument = monumentRepository.save(monumentToSave)
@@ -34,8 +34,8 @@ class MonumentController(private val monumentRepository: MonumentRepository) {
         return ResponseEntity(savedMonument, HttpStatus.CREATED)
     }
 
-    @PostMapping("/update")
-    fun updateMonument(): ResponseEntity<Any> {
+    @PutMapping()
+    fun updateMonument(@RequestBody string: String): ResponseEntity<Any> {
         return ResponseEntity("Endpoint is not implemented yet", HttpStatus.NOT_IMPLEMENTED)
     }
 
