@@ -8,7 +8,11 @@ spring:
     url: jdbc:oracle:thin:@//13.95.19.215:1521/dev
     username: um
     password: um
-    driver-class-name: oracle.jdbc.driver.OracleDriver
+    hikari:
+      validation-timeout: 1000
+      connection-test-query: select 1 from dual
+      connection-timeout: 3600000
+
   jpa:
     hibernate:
       ddl-auto: none
