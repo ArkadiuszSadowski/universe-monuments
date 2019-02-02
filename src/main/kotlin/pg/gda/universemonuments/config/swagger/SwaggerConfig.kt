@@ -16,7 +16,7 @@ class SwaggerConfig {
     fun api(): Docket {
         return Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.any())
+                .apis(RequestHandlerSelectors.basePackage("pg.gda.universemonuments"))
                 .paths(PathSelectors.any())
                 .build()
     }

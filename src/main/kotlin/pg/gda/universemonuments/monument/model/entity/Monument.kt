@@ -1,6 +1,7 @@
 package pg.gda.universemonuments.monument.model.entity
 
 import pg.gda.universemonuments.monument.model.request.MonumentCreateRequest
+import pg.gda.universemonuments.user.model.entity.User
 import java.sql.Date
 import javax.persistence.*
 
@@ -36,11 +37,15 @@ data class Monument(
 
         @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
         @JoinColumn(name = "address_id", nullable = false)
-        val address: Address
+        val address: Address,
+
+        @ManyToOne(fetch = FetchType.LAZY)
+        @JoinColumn(name = "author_id")
+        val author: User
 
 ) {
     companion object {
-        fun from(monumentCreateRequest: MonumentCreateRequest): Monument {
+        fun from(monumentCreateRequest: MonumentCreateRequest, author: User): Monument {
             val (name, function, creationDate, archivalSource,
                     coordinatesCreateRequest, addressCreateRequest) = monumentCreateRequest
 
@@ -52,7 +57,8 @@ data class Monument(
                     archivalSource = archivalSource,
                     approved = false,
                     coordinates = Coordinates.from(coordinatesCreateRequest),
-                    address = Address.from(addressCreateRequest))
+                    address = Address.from(addressCreateRequest),
+                    author = author)
         }
     }
 }

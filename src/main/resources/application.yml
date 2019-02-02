@@ -1,13 +1,13 @@
 server:
-  port: 7071
+  port: 7070
 
 spring:
   application:
     name: UniverseMonuments
   datasource:
-    url: jdbc:oracle:thin:@//localhost:49161/XE
-    username: universemonuments
-    password: universemonuments
+    url: jdbc:oracle:thin:@//13.95.19.215:1521/dev
+    username: um
+    password: um
     driver-class-name: oracle.jdbc.driver.OracleDriver
   jpa:
     hibernate:
@@ -18,4 +18,4 @@ spring:
 token:
   key:
     secret: B&E)H@McQfTjWnZr4u7x!A%C*F-JaNdR
-    expiration: 60
+    expiration: 2

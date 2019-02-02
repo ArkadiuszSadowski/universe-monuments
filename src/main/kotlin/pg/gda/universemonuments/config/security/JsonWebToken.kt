@@ -2,7 +2,7 @@ package pg.gda.universemonuments.config.security
 
 data class JsonWebToken(
         val userType: Type,
-        val userId: Long,
+        val userId: Int,
         val userLogin: String
 ) {
     companion object {
@@ -12,7 +12,8 @@ data class JsonWebToken(
 
     enum class Type {
         INVALID,
-        USER
+        USER,
+        ADMIN
     }
 
     fun isValid(): Boolean {

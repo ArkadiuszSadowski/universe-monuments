@@ -42,7 +42,7 @@ class JWTProvider(
             val claims = Jwts.parser().setSigningKey(signingKey).parseClaimsJws(token).body
             JsonWebToken(
                     userType = JsonWebToken.Type.USER,
-                    userId = claims["userId"] as Long,
+                    userId = claims["userId"] as Int,
                     userLogin = claims["userLogin"] as String
             )
         } catch (exception: Exception) {
@@ -62,7 +62,7 @@ class JWTProvider(
     }
 
     private fun generateExpirationTime(): Date {
-        return Date.from(LocalDateTime.now().plusSeconds(expiration).atZone(ZoneId.systemDefault()).toInstant())
+        return Date.from(LocalDateTime.now().plusHours(expiration).atZone(ZoneId.systemDefault()).toInstant())
     }
 
 }

@@ -14,7 +14,7 @@ class TokenAuthenticationProvider(
 ) : AuthenticationProvider {
 
     @Throws(AuthenticationException::class)
-    override fun authenticate(authentication: Authentication?): Authentication {
+    override fun authenticate(authentication: Authentication?): Authentication? {
         val token = jwtProvider.from(authentication?.name)
 
         if (token.isValid().not())

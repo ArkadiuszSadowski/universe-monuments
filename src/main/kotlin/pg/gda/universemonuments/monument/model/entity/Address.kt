@@ -17,7 +17,7 @@ data class Address(
         val street: String,
 
         @Column(name = "house_number")
-        val houseNumber: String,
+        val houseNumber: String?,
 
         @Column(name = "flat_number")
         val flatNumber: String?,

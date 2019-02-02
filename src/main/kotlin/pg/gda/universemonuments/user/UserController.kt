@@ -3,9 +3,9 @@ package pg.gda.universemonuments.user
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.server.ResponseStatusException
 import pg.gda.universemonuments.config.security.JWTProvider
 import pg.gda.universemonuments.user.model.entity.User
-import pg.gda.universemonuments.user.model.request.UserLogInRequest
 import pg.gda.universemonuments.user.model.request.UserRegisterRequest
 import pg.gda.universemonuments.user.model.response.UserLoggedInResponse
 import pg.gda.universemonuments.user.repository.UserRepository
@@ -18,31 +18,32 @@ class UserController(
 ) {
 
     @PostMapping("/register")
-    fun register(@RequestBody userRegisterRequest: UserRegisterRequest): ResponseEntity<Any> {
+    fun register(@RequestBody userRegisterRequest: UserRegisterRequest): ResponseEntity<UserLoggedInResponse> {
         val user = userRepository.findUserByLogin(userRegisterRequest.login)
 
-        return when (user) {
+        when (user) {
             null -> {
                 val savedUser = userRepository.save(User.from(userRegisterRequest))
                 val token = jwtProvider.issue(savedUser)
-                ResponseEntity(UserLoggedInResponse.from(savedUser, token), HttpStatus.CREATED)
+                return ResponseEntity(UserLoggedInResponse.from(savedUser, token), HttpStatus.CREATED)
             }
             else -> {
-                ResponseEntity("User with given login already exist", HttpStatus.NOT_ACCEPTABLE)
+                throw ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "User with given login already exist")
             }
         }
     }
 
     @GetMapping("/log-in")
-    fun logIn(@RequestBody userLogInRequest: UserLogInRequest): ResponseEntity<Any> {
-        val userFromDb = userRepository.findUserByLogin(userLogInRequest.login)
-                ?: return ResponseEntity("User do not exist", HttpStatus.NOT_FOUND)
+    fun logIn(@RequestParam("login") login: String,
+              @RequestParam("password") password: String): ResponseEntity<UserLoggedInResponse> {
+        val userFromDb = userRepository.findUserByLogin(login)
+                ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "User do not exist")
 
-        return if (userLogInRequest.password == userFromDb.password) {
+        if (password == userFromDb.password) {
             val token = jwtProvider.issue(userFromDb)
-            ResponseEntity(UserLoggedInResponse.from(userFromDb, token), HttpStatus.OK)
+            return ResponseEntity(UserLoggedInResponse.from(userFromDb, token), HttpStatus.OK)
         } else {
-            return ResponseEntity("Incorrect password", HttpStatus.NOT_ACCEPTABLE)
+            throw ResponseStatusException(HttpStatus.NOT_ACCEPTABLE, "Incorrect password")
         }
     }
 }

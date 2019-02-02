@@ -18,7 +18,7 @@ data class CoordinatesCreateRequest(
 
 data class AddressCreateRequest(
         val street: String,
-        val houseNumber: String,
+        val houseNumber: String?,
         val flatNumber: String?,
         val postCode: String,
         val city: String,
