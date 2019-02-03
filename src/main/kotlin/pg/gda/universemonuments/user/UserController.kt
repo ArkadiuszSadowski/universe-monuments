@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.server.ResponseStatusException
 import pg.gda.universemonuments.config.security.JWTProvider
 import pg.gda.universemonuments.user.model.entity.User
+import pg.gda.universemonuments.user.model.request.UserLogInRequest
 import pg.gda.universemonuments.user.model.request.UserRegisterRequest
 import pg.gda.universemonuments.user.model.response.UserLoggedInResponse
 import pg.gda.universemonuments.user.repository.UserRepository
@@ -33,13 +34,12 @@ class UserController(
         }
     }
 
-    @GetMapping("/log-in")
-    fun logIn(@RequestParam("login") login: String,
-              @RequestParam("password") password: String): ResponseEntity<UserLoggedInResponse> {
-        val userFromDb = userRepository.findUserByLogin(login)
+    @PostMapping("/log-in")
+    fun logIn(@RequestBody userLogInRequest: UserLogInRequest): ResponseEntity<UserLoggedInResponse> {
+        val userFromDb = userRepository.findUserByLogin(userLogInRequest.login)
                 ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "User do not exist")
 
-        if (password == userFromDb.password) {
+        if (userLogInRequest.password == userFromDb.password) {
             val token = jwtProvider.issue(userFromDb)
             return ResponseEntity(UserLoggedInResponse.from(userFromDb, token), HttpStatus.OK)
         } else {
