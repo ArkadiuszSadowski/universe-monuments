@@ -5,13 +5,15 @@ spring:
   application:
     name: UniverseMonuments
   datasource:
-    url: jdbc:oracle:thin:@//13.95.19.215:1521/dev
+    url: jdbc:oracle:thin:@//40.91.221.118:1521/dev
     username: um
     password: um
     hikari:
-      validation-timeout: 1000
+      validation-timeout: 60000
       connection-test-query: select 1 from dual
       connection-timeout: 3600000
+      minimum-idle: 0
+    driver-class-name: oracle.jdbc.driver.OracleDriver
 
   jpa:
     hibernate:

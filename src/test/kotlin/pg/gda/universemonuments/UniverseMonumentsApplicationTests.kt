@@ -13,7 +13,6 @@ import org.springframework.test.context.junit4.SpringRunner
 @ActiveProfiles("default")
 class UniverseMonumentsApplicationTests {
 
-
 	@Ignore
 	@Test
 	fun contextLoads() {
