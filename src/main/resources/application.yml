@@ -1,5 +1,5 @@
 server:
-  port: 7051
+  port: 7050
 
 spring:
   application:
@@ -8,19 +8,19 @@ spring:
     url: jdbc:oracle:thin:@//40.91.221.118:1521/dev
     username: um
     password: um
+    driver-class-name: oracle.jdbc.OracleDriver
     hikari:
-      validation-timeout: 60000
+      validation-timeout: 5000
       connection-test-query: select 1 from dual
-      connection-timeout: 3600000
+      connection-timeout: 10000
       minimum-idle: 0
-    driver-class-name: oracle.jdbc.driver.OracleDriver
-
+      max-lifetime: 120000
   jpa:
     hibernate:
       ddl-auto: none
       use-new-id-generator-mappings: false
     database-platform: org.hibernate.dialect.Oracle10gDialect
-
+    show-sql: true
 token:
   key:
     secret: B&E)H@McQfTjWnZr4u7x!A%C*F-JaNdR

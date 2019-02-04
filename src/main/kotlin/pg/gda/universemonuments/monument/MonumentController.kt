@@ -1,6 +1,5 @@
 package pg.gda.universemonuments.monument
 
-import jdk.nashorn.internal.ir.annotations.Ignore
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -21,6 +20,18 @@ class MonumentController(
     @GetMapping("/all")
     fun getAllMonuments(): ResponseEntity<List<Monument>> {
         val monuments = monumentRepository.findAll().toList()
+        return ResponseEntity(monuments, HttpStatus.OK)
+    }
+
+    @GetMapping()
+    fun getAllMonumentsByApprove(@RequestParam("approved") approved: Boolean): ResponseEntity<List<Monument>> {
+        val monuments = monumentRepository.findMonumentsByApproved(approved);
+        return ResponseEntity(monuments, HttpStatus.OK)
+    }
+
+    @GetMapping("/{userId}/user")
+    fun getUserMonuments(@PathVariable("userId") userId: Long): ResponseEntity<List<Monument>> {
+        val monuments = monumentRepository.findMonumentsByAuthorId(userId)
         return ResponseEntity(monuments, HttpStatus.OK)
     }
 
@@ -45,8 +56,16 @@ class MonumentController(
         return ResponseEntity(savedMonument, HttpStatus.CREATED)
     }
 
-    @PutMapping("/update")
-    fun updateMonument(): ResponseEntity<Any> {
-        return ResponseEntity("Endpoint is not implemented yet", HttpStatus.NOT_IMPLEMENTED)
+    @PutMapping("/approve/{monumentId}/monument")
+    fun markMonumentAsApproved(@PathVariable("monumentId") monumentId: Long): ResponseEntity<Monument> {
+        val monument = monumentRepository.findById(monumentId)
+        if (monument.isPresent.not()) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, "Monument not found")
+        }
+        val monumentToUpdate = monument.get()
+        monumentToUpdate.approved = true
+
+        val updatedMonument = monumentRepository.save(monumentToUpdate)
+        return ResponseEntity(updatedMonument, HttpStatus.OK)
     }
 }

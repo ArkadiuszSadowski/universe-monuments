@@ -21,7 +21,7 @@ class WebSecurityConfiguration : WebSecurityConfigurerAdapter() {
         http.addFilter(filter)
 
         http.authorizeRequests()
-                .antMatchers("/user/register", "/user/log-in","/monuments/all")
+                .antMatchers("/user/register", "/user/log-in", "/monuments", "/monuments/all", "/monuments/**")
                 .permitAll()
                 .antMatchers("/webjars/**", "/swagger-ui.html", "/swagger-resources/**", "/v2/api-docs")
                 .permitAll()

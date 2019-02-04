@@ -17,31 +17,31 @@ data class Monument(
         val id: Long?,
 
         @Column(name = "name")
-        val name: String,
+        var name: String,
 
         @Column(name = "function")
-        val function: String,
+        var function: String,
 
         @Column(name = "creation_date")
-        val creationDate: Date,
+        var creationDate: Date,
 
         @Column(name = "archival_source")
-        val archivalSource: String?,
+        var archivalSource: String?,
 
         @Column(name = "approved")
-        val approved: Boolean,
+        var approved: Boolean,
 
         @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
         @JoinColumn(name = "coordinates_id", nullable = false)
-        val coordinates: Coordinates,
+        var coordinates: Coordinates,
 
         @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
         @JoinColumn(name = "address_id", nullable = false)
-        val address: Address,
+        var address: Address,
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "author_id")
-        val author: User
+        var author: User
 
 ) {
     companion object {
