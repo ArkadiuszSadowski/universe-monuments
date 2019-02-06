@@ -1,6 +1,5 @@
 package pg.gda.universemonuments.user.model.entity
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import pg.gda.universemonuments.user.model.request.UserRegisterRequest
 import javax.persistence.*
 
@@ -16,7 +15,6 @@ data class User(
         @Column(name = "login")
         val login: String,
 
-        @JsonIgnore
         @Column(name = "password")
         val password: String,
 
@@ -24,7 +22,10 @@ data class User(
         val name: String,
 
         @Column(name = "surname")
-        val surname: String
+        val surname: String,
+
+        @Column(name = "usertype")
+        val userType: String
 ) {
     companion object {
         fun from(userRegisterRequest: UserRegisterRequest): User {
@@ -34,7 +35,8 @@ data class User(
                     login = login,
                     password = password,
                     name = name,
-                    surname = surname
+                    surname = surname,
+                    userType = "USER"
             )
         }
 

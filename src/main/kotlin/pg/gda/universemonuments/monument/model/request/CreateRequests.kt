@@ -8,7 +8,9 @@ data class MonumentCreateRequest(
         val creationDate: Date,
         val archivalSource: String?,
         val coordinates: CoordinatesCreateRequest,
-        val address: AddressCreateRequest
+        val address: AddressCreateRequest,
+        val status: String,
+        val type: String
 )
 
 data class CoordinatesCreateRequest(

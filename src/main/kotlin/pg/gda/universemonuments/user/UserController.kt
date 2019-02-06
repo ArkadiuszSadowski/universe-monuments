@@ -12,6 +12,7 @@ import pg.gda.universemonuments.user.model.response.UserLoggedInResponse
 import pg.gda.universemonuments.user.repository.UserRepository
 
 @RestController
+@CrossOrigin
 @RequestMapping("/user")
 class UserController(
         private val userRepository: UserRepository,

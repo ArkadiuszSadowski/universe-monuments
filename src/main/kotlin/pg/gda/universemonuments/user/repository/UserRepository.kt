@@ -7,4 +7,5 @@ import pg.gda.universemonuments.user.model.entity.User
 @Repository
 interface UserRepository: CrudRepository<User, Long>{
     fun findUserByLogin(login: String): User?
+    fun findAuthorByLogin(login: String): User?
 }

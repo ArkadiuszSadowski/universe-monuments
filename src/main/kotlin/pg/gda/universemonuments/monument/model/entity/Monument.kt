@@ -1,5 +1,6 @@
 package pg.gda.universemonuments.monument.model.entity
 
+import org.springframework.format.annotation.DateTimeFormat
 import pg.gda.universemonuments.monument.model.request.MonumentCreateRequest
 import pg.gda.universemonuments.user.model.entity.User
 import java.sql.Date
@@ -20,34 +21,43 @@ data class Monument(
         var name: String,
 
         @Column(name = "function")
-        var function: String,
+        val function: String,
 
         @Column(name = "creation_date")
-        var creationDate: Date,
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
+        val creationDate: Date,
 
         @Column(name = "archival_source")
-        var archivalSource: String?,
+        val archivalSource: String?,
 
         @Column(name = "approved")
         var approved: Boolean,
 
         @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
         @JoinColumn(name = "coordinates_id", nullable = false)
-        var coordinates: Coordinates,
+        val coordinates: Coordinates,
 
         @OneToOne(cascade = [CascadeType.ALL], orphanRemoval = true)
         @JoinColumn(name = "address_id", nullable = false)
-        var address: Address,
+        val address: Address,
 
         @ManyToOne(fetch = FetchType.LAZY)
         @JoinColumn(name = "author_id")
-        var author: User
+        val author: User,
 
+        @OneToOne
+        @JoinColumn(name = "legal_status")
+        val status: Dictionary?,
+
+        @OneToOne
+        @JoinColumn(name = "monument_kind")
+        val type: Dictionary?
 ) {
     companion object {
         fun from(monumentCreateRequest: MonumentCreateRequest, author: User): Monument {
             val (name, function, creationDate, archivalSource,
-                    coordinatesCreateRequest, addressCreateRequest) = monumentCreateRequest
+                    coordinatesCreateRequest, addressCreateRequest,
+                    status, type) = monumentCreateRequest
 
             return Monument(
                     id = null,
@@ -58,7 +68,9 @@ data class Monument(
                     approved = false,
                     coordinates = Coordinates.from(coordinatesCreateRequest),
                     address = Address.from(addressCreateRequest),
-                    author = author)
+                    author = author,
+                    status = Dictionary.fromStatus(status),
+                    type = Dictionary.fromType(type))
         }
     }
 }
