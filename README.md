@@ -1,4 +1,4 @@
-Monument's Universe backend for group project.
+Universe Monuments backend for group project.
 Used technologies
 • SpringBoot (for running server instance)
 
