@@ -5,9 +5,9 @@ spring:
   application:
     name: UniverseMonuments
   datasource:
-    url: jdbc:oracle:thin:@//40.91.221.118:1521/dev
-    username: um
-    password: um
+    url: 
+    username: 
+    password: 
     driver-class-name: oracle.jdbc.OracleDriver
     hikari:
       validation-timeout: 5000
@@ -23,5 +23,5 @@ spring:
     show-sql: true
 token:
   key:
-    secret: B&E)H@McQfTjWnZr4u7x!A%C*F-JaNdR
+    secret: 
     expiration: 2
