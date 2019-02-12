@@ -1,21 +1,21 @@
-Universe Monuments backend for group project.
-Used technologies
+#Universe Monuments backend for group project
+##Used technologies
 • SpringBoot (for running server instance)
 
 • Docker (for creating image of server)
 
 • Oracle 12c (for mapping data from server)
 
-Architecture
+##Architecture
 Package by feature
 
-Tools
+##Tools
 • IntelliJ IDEA
 • Docker
 • Sql developer
 
 
-Running app
+#Running app
 Clone repository (git clone https://github.com/ArkadiuszSadowski/universe-monuments.git)
 
 Download and install docker
