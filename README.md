@@ -15,7 +15,7 @@ Package by feature
 • Sql developer
 
 
-# Running app
+## Running app
 Clone repository (git clone https://github.com/ArkadiuszSadowski/universe-monuments.git)
 
 Download and install docker
